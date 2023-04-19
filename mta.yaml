@@ -1,14 +1,13 @@
+_schema-version: '3.2'
 ID: extended_flex_demo
-_schema-version: '3.1'
 version: 0.0.1
 
 build-parameters:
   before-all:
-    builders:
-      - builder: custom
-        commands: 
-          - npm install
+  - builder: custom
+    commands: 
+    - npm install
 
 modules:
- - name: extended_flex_npm
-   type: npm
+- name: extended_flex_npm
+  type: npm
