@@ -11,3 +11,4 @@ build-parameters:
 modules:
 - name: extended_flex_npm
   type: npm
+  path: .
