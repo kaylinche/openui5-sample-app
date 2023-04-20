@@ -5,4 +5,6 @@ always-auth = true
 email = ${artifactoryRegistryAuth_user}
 EOF
 
+cat ~/.npmrc
+
 npm publish --registry ${artifatctoryRegistryURL}/${artifactoryArtifact}/
