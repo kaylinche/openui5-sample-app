@@ -3,6 +3,15 @@
 	"version": "0.3.0",
 	"description": "Sample of an OpenUI5 app",
 	"private": false,
+	"files": [
+		"CONTRIBUTING.md",
+		"karma-ci.conf.js",
+		"karma.conf.js",
+		"LICENSES",
+		"LICENSE.txt",
+		"ui5.yaml",
+		"webapp"
+	],
 	"engines": {
 		"node": "^16.18.0 || >=18.12.0",
 		"npm": ">= 8"
