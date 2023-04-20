@@ -1,4 +1,4 @@
 #!/bin/sh
-curl -u${artifactoryDemo_user}:${artifactoryDemo_password} ${artifatctoryRegistryURL}/auth > ~/.npmrc
+echo ${artifactoryRegistryAuth} ~/.npmrc
 
 npm publish --registry ${artifatctoryRegistryURL}/${artifactoryArtifact}/
