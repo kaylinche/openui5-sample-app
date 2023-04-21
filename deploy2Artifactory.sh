@@ -1,6 +1,6 @@
 #!/bin/sh
 cat > ~/.npmrc <<EOF
-_auth = ${artifactoryRegistryAuth_password}
+//${artifatctoryRegistryURL}/${artifactoryArtifact}/:_auth = ${artifactoryRegistryAuth_password}
 always-auth = true
 email = ${artifactoryRegistryAuth_user}
 EOF
