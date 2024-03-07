@@ -5,6 +5,9 @@
 
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP/openui5-sample-app)](https://api.reuse.software/info/github.com/SAP/openui5-sample-app)
 
+## Live Demo
+A deployed version of the [openui5-sample-app](http://sap.github.io/openui5-sample-app/index.html) is hosted on GitHub Pages.
+
 ## Prerequisites
 - The **UI5 CLI** of the [UI5 Tooling](https://github.com/SAP/ui5-tooling#installing-the-ui5-cli).
     - For installation instructions please see: [Installing the UI5 CLI](https://github.com/SAP/ui5-tooling#installing-the-ui5-cli).
@@ -71,7 +74,7 @@
 
 ## Working with local dependencies
 
-For local development of your applications' dependencies (like OpenUI5 libraries) you can link them by using npm. This will allow you to make changes to your applications' dependencies locally and see the impact in your application immediately.
+For local development of your applications' dependencies (like OpenUI5 libraries) you can use [UI5 Workspaces](https://sap.github.io/ui5-tooling/stable/pages/Workspace/). This will allow you to make changes to those dependencies locally and see the impact in your application immediately.
 
 ### Preparation
 The following needs to be done just once per setup.
@@ -86,45 +89,45 @@ The following needs to be done just once per setup.
     ```sh
     npm install
     ```
-1. Make all projects available as global links. **Note**: The OpenUI5 project uses [wsrun](https://github.com/whoeverest/wsrun) to link all libraries with one command. See [Linking Projects](https://sap.github.io/ui5-tooling/pages/Overview/#linking-projects) for general information about project linking.  
-    In the OpenUI5 root directory, execute:
-    ```sh
-    npm run link-all
-    ```
-2. The UI5 Tooling currently does not support linking of framework libraries defined in the `ui5.yaml` (see [[RFC] 0006 Local Dependency Resolution](https://github.com/SAP/ui5-tooling/pull/157)). Therefore you need to first remove them from there. Instead, you need to add the dependencies via npm, so that they can be linked in the next step.  
-	In the application directory, execute:
-    ```sh
-    ui5 remove sap.f sap.m sap.ui.core themelib_sap_fiori_3
-    ```
-    ```sh
-    npm install @openui5/sap.f
-    npm install @openui5/sap.m
-    npm install @openui5/sap.ui.core
-    npm install @openui5/themelib_sap_fiori_3
-    ```
 
-### Linking
-1. In your application directory: Link the required OpenUI5 libraries
+### Setup UI5 Workspace
+
+Would you like to work on the application project and one or more of its UI5 framework dependencies at the same time? We got you covered!
+
+1. Create a new file `ui5-workspace.yaml` in the root folder of the project, right next to the `ui5.yaml`
+2. In `ui5-workspace.yaml`, add the paths to the local dependencies you'd like to use from your local machine:
+    ```yaml
+    specVersion: workspace/1.0
+    metadata:
+        name: default
+    dependencyManagement:
+        resolutions:
+            # local path to OpenUI5. It will resolve all required libraries and transitive dependencies.
+            - path: /local/path/to/openui5
+    ```
+3. Start the development server with default dependency resolution
     ```sh
-    npm link @openui5/sap.f
-    npm link @openui5/sap.m
-    npm link @openui5/sap.ui.core
-    npm link @openui5/themelib_sap_fiori_3
+    npm run start
     ```
 
 You can now make changes in your local OpenUI5 repository and see the impact directly when serving or building your application.
 
-### Unlinking
-To return to using the OpenUI5 npm packages
+If a dependency that is listed in `ui5.yaml` is omitted in the `resolutions` section of `ui5-workspace.yaml`, the library is resolved in the usual way by downloading it from the registry. For more information about dependency resolutions, check [here](https://sap.github.io/ui5-tooling/v3/pages/Workspace/#dependency-management).
 
-1. Remove the dependencies via npm
-    ```sh
-    npm uninstall @openui5/sap.f
-    npm uninstall @openui5/sap.m
-    npm uninstall @openui5/sap.ui.core
-    npm uninstall @openui5/themelib_sap_fiori_3
-    ```
-2. Re-add the libraries to the framework section of the `ui5.yaml`
-    ```sh
-    ui5 add sap.f sap.m sap.ui.core themelib_sap_fiori_3
-    ```
+#### Non-default workspace
+
+The workspace feature always uses the `default` workspace and always attempts to resolve any dependencies from it. If you'd like to use the workspace for local development but want to resolve the libraries in the usual way by default, you can name the workspace and use that name later, for example like this:
+
+```yaml
+specVersion: workspace/1.0
+metadata:
+    name: local-dependencies # Not "default"
+dependencyManagement:
+    resolutions:
+        - path: /local/path/to/openui5
+```
+
+```sh
+# Starts a server with a named workspace
+npm run start -- -w local-dependencies
+```
