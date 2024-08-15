@@ -7,7 +7,7 @@ build-parameters:
   - builder: custom
     commands: 
     - npm install
-    - npm build
+    - npm run build
 
 modules:
 - name: extended_flex_npm
