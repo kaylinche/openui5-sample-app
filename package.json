@@ -22,8 +22,8 @@
 		"karma": "karma start",
 		"karma-ci": "rimraf coverage && karma start karma-ci.conf.js",
 		"watch": "npm run karma",
-		"test": "node --version && npm run lint && npm run karma-ci",
-		"build": "ui5 build -a --clean-dest",
+		"test": "npm run lint && npm run karma-ci",
+		"build": "node --version && ui5 build -a --clean-dest",
 		"build-self-contained": "ui5 build self-contained -a --clean-dest",
 		"serve-dist": "ws --compress -d dist",
 		"deploy2artifactory": "./deploy2Artifactory.sh"
